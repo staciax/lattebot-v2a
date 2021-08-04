@@ -1,0 +1,1 @@
+BOTVERSION = "latte v2.001"
