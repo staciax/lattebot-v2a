@@ -16,7 +16,7 @@ import utils
 from user_config import * 
 from utils.util import Pag
 
-#xpchannel
+#xp_config
 bot_channel = BOT_CH
 chat_channel = CHAT_CH
 level = LVLROLE #level role
@@ -32,11 +32,32 @@ class xp(commands.Cog):
         print(f"{self.__class__.__name__} cog has been loaded\n-----")
     
     @commands.command(name="set_ch_exp")
-    async def set_channel_exp(self, ctx , channel: discord.TextChannel):
+    async def set_channel_exp(self, ctx , channel: discord.TextChannel = None):
         if channel is None:
             await ctx.send("You did not give me a channel, therefore I will use the current one!")
         channel = channel or ctx.channel
         data = await self.bot.lvl_guild.find_by_custom({"guild_id": ctx.guild.id, "channel_id": channel.id})
+        embed = discord.Embed(title="Add Channel EXP")
+        embed.add_field(name=f"Channel", value=f"{channel.mention}", inline=False)
+
+        m = await ctx.send("Are these all valid?", embed=embed , delete_after=60)
+        await m.add_reaction("✅")
+        await m.add_reaction("🇽")
+
+        try:
+            reaction, member = await self.bot.wait_for(
+                "reaction_add",
+                timeout=60,
+                check=lambda reaction, user: user == ctx.author
+                and reaction.message.channel == ctx.channel
+            )
+        except asyncio.TimeoutError:
+            await ctx.send("Confirmation Failure. Please try again.")
+            return
+
+        if str(reaction.emoji) not in ["✅", "🇽"] or str(reaction.emoji) == "🇽":
+            await ctx.send("Cancelling giveaway!")
+            return
         if data is None:
             data = {
                 "guild_id": ctx.guild.id,
@@ -121,7 +142,43 @@ class xp(commands.Cog):
                     break
         
         await ctx.channel.send(embed=embed)
-        
+
+    @commands.command(aliases=['lv', 'lvl' , 'xp' , 'exp'])
+    async def level(self, ctx, member: discord.Member = None): 
+                if not member:  # if member is no mentioned
+                    member = ctx.message.author
+                member_id = member.id
+#        if ctx.channel.id in bot_channel:   
+                data_user = await self.bot.lvling.find_by_custom(
+                    {"user_id": member.id, "guild_id": ctx.guild.id}
+                )
+                if data_user is None:
+                    embed = discord.Embed(description="You haven't sent any messages, **no xp**!!",color=0xffffff)
+                    await ctx.channel.send(embed=embed)
+                else:
+                    xp = data_user["count"]
+                    lvl = 0
+                    rank = 0
+                    while True:
+                        if xp < ((50*(lvl**2))+(50*lvl)):
+                            break
+                        lvl += 1
+                    xp -= ((50*((lvl-1)**2))+(50*(lvl-1)))
+                    final_xp = (200*((1/2)*lvl))
+
+                    lvling_filter = {"guild_id": ctx.guild.id}
+                    warns = await self.bot.lvling.find_many_by_custom(lvling_filter)        
+                    warns = sorted(warns, key=lambda x: x["count"])
+                    for x in reversed(warns):
+                        rank += 1
+                        if data_user["user_id"] == x["user_id"]:
+                            break
+
+                    embedlv = discord.Embed(title=f"{member.name}'s level stats | {ctx.guild.name}",color=0x77dd77)
+                    embedlv.set_image(url="attachment://latte-level.png")
+
+                    await ctx.channel.send(file=utils.level_images(member, final_xp, lvl, rank, xp), embed=embedlv)
+      
 def setup(bot):
 
     bot.add_cog(xp(bot))
