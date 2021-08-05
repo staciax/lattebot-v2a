@@ -90,6 +90,23 @@ class xp(commands.Cog):
         
     @commands.Cog.listener()
     async def on_message(self, message):
+        filter_lvl = await self.bot.reward_role.find_many_by_custom({"guild_id": message.guild.id})
+        filting_lvl = sorted(filter_lvl, key=lambda x: x["role_id"])
+
+        if bool(filting_lvl) == True:
+            print("true filting_lvl")
+        else:
+            print("false filting_lvl")
+
+        filted_lvl = []
+        filted_role = []
+
+        for x in filting_lvl:
+            lvl_id = x["level_id"]
+            role_id = x["role_id"]
+            filted_lvl.append(lvl_id)
+            filted_role.append(role_id)
+
         data_check = await self.bot.lvl_guild.find_by_custom({"guild_id": message.guild.id, "channel_id": message.channel.id})
         if data_check:
             data = await self.bot.lvling.find_by_custom(
@@ -111,16 +128,27 @@ class xp(commands.Cog):
                 if xp < ((50*(lvl**2))+(50*lvl)):
                     break
                 lvl += 1
-                xp -= ((50*((lvl-1)**2))+(50*(lvl-1)))
-                if xp == 0:
+            print(f'now level{lvl}')
+            xp -= ((50*((lvl-1)**2))+(50*(lvl-1)))
+            if xp == 0:
+                if bool(filting_lvl) == True:
                     emlvup = discord.Embed(title="LEVEL UP!", description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
                     msg = await message.channel.send(embed=emlvup)
+                    for i in range(len(filted_role)):
+                        if lvl == filted_lvl[i]:
+                            print(filted_role[i])
+                            await message.author.add_roles(discord.utils.get(message.author.guild.roles, name=filted_role[i]))
+                            embed = discord.Embed(title="LEVEL UP!",description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
+                            await msg.edit(embed=embed)
+                else:
+                    embed_basic = discord.Embed(title="LEVEL UP!", description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
+                    msg = await message.channel.send(embed=embed_basic)
                     for i in range(len(level)):
                         if lvl == levelnum[i]:
                             await message.author.add_roles(discord.utils.get(message.author.guild.roles, name=level[i]))
                             embed = discord.Embed(title="LEVEL UP!",description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
-#                           embed.set_thumbnail(url=message.author.avatar.url)
                             await msg.edit(embed=embed)
+
     
     @commands.command(aliases=['rank', 'ranking'])
     async def leaderboard(self, ctx): #only one ch use '==' , more use 'in'
@@ -218,10 +246,6 @@ class xp(commands.Cog):
             await ctx.send("role create")
         else:
             print("found data")
-
-
-        
-       
       
 def setup(bot):
 
