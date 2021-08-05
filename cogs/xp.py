@@ -10,6 +10,9 @@ intents.members = True
 from PIL import Image, ImageDraw , ImageFont , ImageEnhance , ImageFilter
 from io import BytesIO
 import requests
+from itertools import groupby
+import json
+import numpy as np
 
 # Local
 import utils
@@ -88,7 +91,6 @@ class xp(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         data_check = await self.bot.lvl_guild.find_by_custom({"guild_id": message.guild.id, "channel_id": message.channel.id})
-
         if data_check:
             data = await self.bot.lvling.find_by_custom(
             {"user_id": message.author.id, "guild_id": message.guild.id}
@@ -104,7 +106,7 @@ class xp(commands.Cog):
             await self.bot.lvling.update_by_custom(
                 {"user_id": message.author.id, "guild_id": message.guild.id}, data
             )
-            lvl = 0 
+            lvl = 0
             while True:
                 if xp < ((50*(lvl**2))+(50*lvl)):
                     break
@@ -128,7 +130,7 @@ class xp(commands.Cog):
         embed.set_author(name=f"{self.bot.user.name} Rankings", url=self.bot.user.avatar.url)
         lvling_filter = {"guild_id": ctx.guild.id}
         warns = await self.bot.lvling.find_many_by_custom(lvling_filter)
-        
+
         warns = sorted(warns, key=lambda x: x["count"])
         for x in reversed(warns):
                 try:
@@ -178,6 +180,48 @@ class xp(commands.Cog):
                     embedlv.set_image(url="attachment://latte-level.png")
 
                     await ctx.channel.send(file=utils.level_images(member, final_xp, lvl, rank, xp), embed=embedlv)
+    
+    @commands.command(name="basic-role")
+    async def basic_xp_role(self, ctx):
+        embed = discord.Embed(description="", color=PTYELLOW)
+        embed.title = "✧ LATTE XP ROLE!"
+        lvlbar = "・┈・┈・┈・Level!・┈・┈・┈・⠀⠀"
+        lvlbar2 = discord.utils.get(ctx.author.guild.roles, name=lvlbar)
+        if not lvlbar2:
+            await ctx.guild.create_role(name=lvlbar , colour=0x18191c)
+            embed.description += f"{lvlbar.mention}\n"
+            embed.description += f"{lvlbar2.mention}\n"
+        
+            for x, y in zip(reversed(level), reversed(colorlvl)):
+                checkrole = discord.utils.get(ctx.author.guild.roles, name=level)
+                if not checkrole:
+                    await ctx.guild.create_role(name=x , colour=y)
+                else:
+                    return
+        elif lvlbar2:
+            for i in reversed(range(len(level))):
+                roles = discord.utils.get(ctx.author.guild.roles, name=level[i])
+                if roles:
+                    embed.description += f"{roles.mention}\n"
+
+            await ctx.channel.send(embed=embed)
+        
+    @commands.command(name="rewardxp")
+    async def reward_role_level(self, ctx, role: discord.Role, level: int):
+        print(f"{role.id} {level}\n\n")
+        level_finding = {"guild_id": ctx.guild.id, "role_id": role.name}
+        level_finded = await self.bot.reward_role.find_by_custom(level_finding)
+
+        if level_finded is None:
+            level_data = {"guild_id": ctx.guild.id, "role_id": role.name, "level_id": level}
+            await self.bot.reward_role.update_by_custom(level_data , level_data)
+            await ctx.send("role create")
+        else:
+            print("found data")
+
+
+        
+       
       
 def setup(bot):
 

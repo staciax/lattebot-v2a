@@ -190,6 +190,7 @@ if __name__ == "__main__":
     bot.reaction_roles = Document(bot.db, "reaction_roles")
     bot.lvl_guild = Document(bot.db, "lvl_guild")
     bot.lvling = Document(bot.db, "leveling")
+    bot.reward_role = Document(bot.db, "reward_role")
 
     for file in os.listdir(cwd + "/cogs"):
         if file.endswith(".py") and not file.startswith("_"):
