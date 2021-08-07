@@ -52,8 +52,13 @@ def emoji_converter(name):
     "whiteheart" : "<a:white_heart1:867855190472523806>",
     "mongodb" : "<:mongo:870397578242568202>", 
     "latteicon" : "<:latteicon:870419352632045568>", 
-    "typing" : "<a:typing:870418148602552422>",  
- 
+    "typing" : "<a:typing:870418148602552422>",
+    "offline" : "<:offline:864171414750625812>",
+    "dnd" : "<:dnd2:864173608321810452>",
+    "idle" : "<:idle:864185381833277501>",
+    "online" : "<:Online:864171414466592788>",
+    "member" : "<:member:864219999954796615>",
+
   }
   
   return names_to_emojis.get(name)

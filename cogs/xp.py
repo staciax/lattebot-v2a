@@ -59,7 +59,7 @@ class xp(commands.Cog):
             return
 
         if str(reaction.emoji) not in ["✅", "🇽"] or str(reaction.emoji) == "🇽":
-            await ctx.send("Cancelling giveaway!")
+            await ctx.send("add channel cancelling")
             return
         if data is None:
             data = {
@@ -72,13 +72,39 @@ class xp(commands.Cog):
             await ctx.send("test you have")
     
     @commands.command(name="del_ch_exp")
-    async def delete_channel_exp(self, ctx , channel: discord.TextChannel):
+    async def delete_channel_exp(self, ctx , channel: discord.TextChannel=None):
         if channel is None:
             await ctx.send("You did not give me a channel, therefore I will use the current one!")
         channel = channel or ctx.channel
         data = {"guild_id": ctx.guild.id, "channel_id": channel.id}
-
         data_deleted = await self.bot.lvl_guild.delete_by_custom(data)
+        
+        if bool(data_deleted) == False:
+            print("data false")
+            return
+
+        embed = discord.Embed(title="Delete Channel EXP")
+        embed.add_field(name=f"Channel", value=f"{channel.mention}", inline=False)
+
+        m = await ctx.send("Are these all valid?", embed=embed , delete_after=60)
+        await m.add_reaction("✅")
+        await m.add_reaction("🇽")
+
+        try:
+            reaction, member = await self.bot.wait_for(
+                "reaction_add",
+                timeout=60,
+                check=lambda reaction, user: user == ctx.author
+                and reaction.message.channel == ctx.channel
+            )
+        except asyncio.TimeoutError:
+            await ctx.send("Confirmation Failure. Please try again.")
+            return
+
+        if str(reaction.emoji) not in ["✅", "🇽"] or str(reaction.emoji) == "🇽":
+            await ctx.send("Delete channel cancelling")
+            return
+
         if data_deleted and data_deleted.acknowledged:
             await ctx.send(
                 f"I deleted {channel.mention}"
@@ -235,7 +261,7 @@ class xp(commands.Cog):
             await ctx.channel.send(embed=embed)
         
     @commands.command(name="rewardxp")
-    async def reward_role_level(self, ctx, role: discord.Role, level: int):
+    async def reward_role_level(self, ctx, role: discord.Role, level: int = None):
         print(f"{role.id} {level}\n\n")
         level_finding = {"guild_id": ctx.guild.id, "role_id": role.name}
         level_finded = await self.bot.reward_role.find_by_custom(level_finding)
@@ -248,5 +274,4 @@ class xp(commands.Cog):
             print("found data")
       
 def setup(bot):
-
     bot.add_cog(xp(bot))

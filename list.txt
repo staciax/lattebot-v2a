@@ -1,0 +1,32 @@
+List
+
+1.cooldown 
+2.Badword
+3.spam
+4.select role
+5.only images channel
+7.All embed converter
+8.permission command
+9.afk command
+10.invite code custom role
+11.lockdown
+12.member , server , voice log
+13.welcome / leave set db
+14.custome reaction / Warning 
+15.autorole
+16.select color ({mamber.name} change to color...)
+17.self.bot ping
+18.add role / delrome (example add role1 ffffff or white)
+19.modmail
+20.load , unload , reload cogs
+21.fun command
+22.slowmode
+23.roleinfo , memberinfo and badge , serverinfo , emojiinfo ,categoryinfo
+24.give role
+25.xp buy role , setlevelimages 
+26.calculator
+27.kick, ban , log
+28.poll 
+29.change nick and auto nick
+
+last change ui embed ,dashboard and no music....  / prefix is lt or l or L or d
