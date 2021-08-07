@@ -1,5 +1,13 @@
 import discord
-from discord.ext import commands
+from utils import emoji_converter
+
+""" Server info converter"""
+emoji_s = emoji_converter
+m_online = emoji_s('online')
+m_offline = emoji_s('offline')
+m_idle = emoji_s('idle')
+m_dnd = emoji_s('dnd')
+m_invisible = emoji_s('invisible')
 
 def afk_channel_timeout(ctx):
     second = ctx.guild.afk_timeout
@@ -48,3 +56,47 @@ def check_boost(ctx):
     if last_boost.premium_since is not None:
       boosts = f'{boosts}\n**Last Boost:**\n{last_boost}'
   return boosts
+
+""" member infomation converter"""
+
+def mobile_status(member):
+    mobile = str(member.mobile_status)
+    if mobile == 'offline':
+        mb = f"{m_offline} Mobile"
+    elif mobile == 'dnd':
+        mb = f"{m_dnd} Mobile"
+    elif mobile == 'idle':
+        mb = f"{m_idle} Mobile"
+    elif mobile == 'online':
+        mb = f"{m_online} Mobile"  
+    else:
+        mb = f"{m_invisible} Mobile"    
+    return mb
+
+def desktop_status(member):
+    desktop = str(member.desktop_status)
+    if desktop == 'offline':
+        dt = f"{m_offline} Desktop"
+    elif desktop == 'dnd':
+        dt = f"{m_dnd} Desktop"
+    elif desktop == 'idle':
+        dt = f"{m_idle} Desktop"
+    elif desktop == 'online':
+        dt = f"{m_online} Desktop"       
+    else:
+        dt = f"{m_invisible} Desktop"
+    return dt
+
+def web_status(member):
+    Web = str(member.web_status)
+    if Web == 'offline':
+        wb = f"{m_offline} Web"
+    elif Web == 'dnd':
+        wb =  f"{m_dnd} Web"
+    elif Web == 'idle':
+        wb = f"{m_idle} Web"
+    elif Web == 'online':
+        wb = f"{m_online} Web"
+    else:
+        wb = f"{m_invisible} Web"
+    return wb

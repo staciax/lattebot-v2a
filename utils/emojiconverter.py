@@ -58,6 +58,7 @@ def emoji_converter(name):
     "idle" : "<:idle:864185381833277501>",
     "online" : "<:Online:864171414466592788>",
     "member" : "<:member:864219999954796615>",
+    "invisible" : "<:invisible:873598381073768469>",
 
   }
   

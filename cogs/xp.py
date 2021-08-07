@@ -35,6 +35,7 @@ class xp(commands.Cog):
         print(f"{self.__class__.__name__} cog has been loaded\n-----")
     
     @commands.command(name="set_ch_exp")
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     async def set_channel_exp(self, ctx , channel: discord.TextChannel = None):
         if channel is None:
             await ctx.send("You did not give me a channel, therefore I will use the current one!")
@@ -72,6 +73,7 @@ class xp(commands.Cog):
             await ctx.send("test you have")
     
     @commands.command(name="del_ch_exp")
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     async def delete_channel_exp(self, ctx , channel: discord.TextChannel=None):
         if channel is None:
             await ctx.send("You did not give me a channel, therefore I will use the current one!")
@@ -177,6 +179,7 @@ class xp(commands.Cog):
 
     
     @commands.command(aliases=['rank', 'ranking'])
+    @commands.cooldown(1, 10, commands.BucketType.guild)
     async def leaderboard(self, ctx): #only one ch use '==' , more use 'in'
         i = 1
         embed = discord.Embed(color=0x77dd77 , timestamp=datetime.now(timezone.utc))
@@ -200,6 +203,7 @@ class xp(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.command(aliases=['lv', 'lvl' , 'xp' , 'exp'])
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     async def level(self, ctx, member: discord.Member = None): 
                 if not member:  # if member is no mentioned
                     member = ctx.message.author
@@ -236,6 +240,7 @@ class xp(commands.Cog):
                     await ctx.channel.send(file=utils.level_images(member, final_xp, lvl, rank, xp), embed=embedlv)
     
     @commands.command(name="basic-role")
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     async def basic_xp_role(self, ctx):
         embed = discord.Embed(description="", color=PTYELLOW)
         embed.title = "✧ LATTE XP ROLE!"
@@ -261,6 +266,7 @@ class xp(commands.Cog):
             await ctx.channel.send(embed=embed)
         
     @commands.command(name="rewardxp")
+    @commands.cooldown(1, 15, commands.BucketType.guild)
     async def reward_role_level(self, ctx, role: discord.Role, level: int = None):
         print(f"{role.id} {level}\n\n")
         level_finding = {"guild_id": ctx.guild.id, "role_id": role.name}

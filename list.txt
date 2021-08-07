@@ -28,5 +28,6 @@ List
 27.kick, ban , log
 28.poll 
 29.change nick and auto nick
+30.admin log (user mute,ban by admin..)
 
 last change ui embed ,dashboard and no music....  / prefix is lt or l or L or d
