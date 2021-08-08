@@ -8,7 +8,6 @@ from discord.ext import commands
 
 import utils.json_loader
 
-
 class Config(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

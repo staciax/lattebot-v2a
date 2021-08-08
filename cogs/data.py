@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from time import time , perf_counter
 from dateutil.relativedelta import relativedelta
 
-from utils.utils_config import BOTVERSION
+from user_config import *
 
 class Data(commands.Cog):
     def __init__(self, bot):

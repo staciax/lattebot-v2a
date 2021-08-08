@@ -10,7 +10,7 @@ List
 9.afk command
 10.invite code custom role
 11.lockdown
-12.member , server , voice log
+12.member , server , voice log check from db enable or disable
 13.welcome / leave set db
 14.custome reaction / Warning 
 15.autorole
@@ -29,5 +29,37 @@ List
 28.poll 
 29.change nick and auto nick
 30.admin log (user mute,ban by admin..)
+31.Error embed converter
+32.click to gif tutorial 
+
 
 last change ui embed ,dashboard and no music....  / prefix is lt or l or L or d
+
+# dm message to my text channel   
+#    @commands.Cog.listener()
+#    async def on_message(self, message):
+#        if not message.author.bot:
+#            if isinstance(message.channel, discord.DMChannel):
+#                if len(message.content) < 20:
+#                    await message.channel.send("<a:b_hitopotatowhat:864921118296506418>")
+#
+#               else:
+#                    embed = discord.Embed(title="DM Report",
+#                                            color=0xffffff,
+#                                            timestamp=datetime.now(timezone.utc)
+#                    )
+#                    embed.set_thumbnail(url=message.author.avatar.url)
+#
+#                    fields = [("Member", message.author.display_name, False),
+#                                ("Message",message.content, False)
+#                    
+#                    ]
+#                    for name, value, inline in fields:
+#                        embed.add_field(name=name, value=value , inline=inline)
+#
+#                    await self.bug_channel.send(embed=embed)
+#                    await message.channel.send("message relayed to bot developer")            
+#            else:
+#                await self.process_commands(message)
+
+# error commands

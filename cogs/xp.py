@@ -183,8 +183,8 @@ class xp(commands.Cog):
     async def leaderboard(self, ctx): #only one ch use '==' , more use 'in'
         i = 1
         embed = discord.Embed(color=0x77dd77 , timestamp=datetime.now(timezone.utc))
-        embed.set_footer(text = f'{ctx.guild.name}', icon_url=ctx.guild.icon.url)
-        embed.set_author(name=f"{self.bot.user.name} Rankings", url=self.bot.user.avatar.url)
+        embed.set_author(name=f"{ctx.guild.name} Rankings", icon_url=ctx.guild.icon.url) # url=ctx.guild.icon.url 
+        embed.set_footer(text = f'{self.bot.user.name}') #, icon_url=self.bot.user.avatar.url
         lvling_filter = {"guild_id": ctx.guild.id}
         warns = await self.bot.lvling.find_many_by_custom(lvling_filter)
 
