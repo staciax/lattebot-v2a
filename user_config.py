@@ -9,3 +9,5 @@ LVLROLE = ["level 3 ꮺ","level 5 ꮺ","level 10 ꮺ","level 20 ꮺ","level 30 �
 LVLNUM = [3,5,10,20,30,40,45,50,60]
 LVLROLECOLOR = [0xc39b7d,0xffbfd7,0xc39b7d,0xffbfd7,0xc39b7d,0xc1e7b8,0xc5ffff,0xec6fc1,0xb98fe4]
 
+DM_CHANNEL = 874349932784545812
+LOG_DM_CHANNEL = 874350028737626182

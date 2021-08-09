@@ -41,7 +41,7 @@ async def get_prefix(bot, message):
 
 
 intents = discord.Intents.all()  # Help command requires member intents
-DEFAULTPREFIX = "l "
+DEFAULTPREFIX = "l"
 secret_file = utils.json_loader.read_json("secrets")
 bot = commands.Bot(
     command_prefix=get_prefix,
@@ -131,7 +131,7 @@ async def on_message(message):
             prefix = bot.DEFAULTPREFIX
         else:
             prefix = data["prefix"]
-        await message.channel.send(f"My prefix here is `{prefix}`", delete_after=15)
+        await message.channel.send(f"This is my prefix `{prefix}` (it's `L` lowercase)", delete_after=15)
 
     await bot.process_commands(message)
 
