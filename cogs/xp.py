@@ -161,21 +161,21 @@ class xp(commands.Cog):
                 xp -= ((50*((lvl-1)**2))+(50*(lvl-1)))
                 if xp == 0:
                     if bool(filting_lvl) == True:
-                        emlvup = discord.Embed(title="LEVEL UP!", description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
+                        emlvup = discord.Embed(title="LEVEL UP!", description=f"**Congratulations**, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
                         msg = await message.channel.send(embed=emlvup)
                         for i in range(len(filted_role)):
                             if lvl == filted_lvl[i]:
                                 print(filted_role[i])
                                 await message.author.add_roles(discord.utils.get(message.author.guild.roles, name=filted_role[i]))
-                                embed = discord.Embed(title="LEVEL UP!",description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
+                                embed = discord.Embed(title="LEVEL UP!",description=f"**Congratulations**, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
                                 await msg.edit(embed=embed)
                     else:
-                        embed_basic = discord.Embed(title="LEVEL UP!", description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
+                        embed_basic = discord.Embed(title="LEVEL UP!", description=f"**Congratulations**, {message.author.mention} you leveled up to **level {lvl}.**!",color=0xffffff)
                         msg = await message.channel.send(embed=embed_basic)
                         for i in range(len(level)):
                             if lvl == levelnum[i]:
                                 await message.author.add_roles(discord.utils.get(message.author.guild.roles, name=level[i]))
-                                embed = discord.Embed(title="LEVEL UP!",description=f"Congratulations, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
+                                embed = discord.Embed(title="LEVEL UP!",description=f"**Congratulations**, {message.author.mention} you leveled up to **level {lvl}.**!\nyou have gotten role **{level[i]}**!!!",color=0xffffff)
                                 await msg.edit(embed=embed)
     
     @commands.command(aliases=['rank', 'ranking'])
