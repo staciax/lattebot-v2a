@@ -15,7 +15,7 @@ class Message(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"-{self.__class__.__name__}")
+        print(f"{self.__class__.__name__} Cog has been loaded\n-----")
 
     @commands.command()
     async def latte(self, ctx):

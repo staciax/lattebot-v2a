@@ -53,10 +53,7 @@ bot = commands.Bot(
 bot.config_token = secret_file["token"]
 bot.connection_url = secret_file["mongo"]
 
-bot.news_api_key = secret_file["news api"]
-bot.joke_api_key = secret_file["x-rapidapi-key"]
-
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 
 bot.DEFAULTPREFIX = DEFAULTPREFIX
 bot.blacklisted_users = []
@@ -91,22 +88,21 @@ bot.color_list = [c for c in bot.colors.values()]
 
 @bot.event
 async def on_ready():
-    # On ready, print some details to standard out
     print(
-        f"-----\nLogged in as: {bot.user.name} : {bot.user.id}\n-----\nMy current prefix is: {bot.DEFAULTPREFIX}\n-----"
+        f"-----\nLogged in as: {bot.user.name} : {bot.user.id}\n-----\nMy bot prefix is: {bot.DEFAULTPREFIX}\n-----"
     )
     await bot.change_presence(
         activity=discord.Activity(type=discord.ActivityType.listening, name="l help")
     ) 
 
-    for document in await bot.config.get_all():
-        print(document)
+#    for document in await bot.config.get_all():
+#        print(document)
 
-    currentMutes = await bot.mutes.get_all()
-    for mute in currentMutes:
-        bot.muted_users[mute["_id"]] = mute
+#    currentMutes = await bot.mutes.get_all()
+#    for mute in currentMutes:
+#        bot.muted_users[mute["_id"]] = mute
 
-    print(bot.muted_users)
+#    print(bot.muted_users)
 
     print("Initialized Database\n-----")
 

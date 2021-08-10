@@ -123,10 +123,10 @@ class xp(commands.Cog):
             filting_lvl = sorted(filter_lvl, key=lambda x: x["role_id"])
 
             if bool(filting_lvl) == True:
-                print("true filting_lvl")
+                pass
             else:
-                print("false filting_lvl")
-
+                pass
+            
             filted_lvl = []
             filted_role = []
 
@@ -211,6 +211,7 @@ class xp(commands.Cog):
     @commands.command(aliases=['lv', 'lvl' , 'xp' , 'exp'])
     @commands.cooldown(1, 15, commands.BucketType.guild)
     async def level(self, ctx, member: discord.Member = None): 
+            async with ctx.typing():
                 if not member:  # if member is no mentioned
                     member = ctx.message.author
                 member_id = member.id
@@ -248,28 +249,29 @@ class xp(commands.Cog):
     @commands.command(name="basic-role")
     @commands.cooldown(1, 15, commands.BucketType.guild)
     async def basic_xp_role(self, ctx):
-        embed = discord.Embed(description="", color=PTYELLOW)
-        embed.title = "✧ LATTE XP ROLE!"
-        lvlbar = "・┈・┈・┈・Level!・┈・┈・┈・⠀⠀"
-        lvlbar2 = discord.utils.get(ctx.author.guild.roles, name=lvlbar)
-        if not lvlbar2:
-            await ctx.guild.create_role(name=lvlbar , colour=0x18191c)
-            embed.description += f"{lvlbar.mention}\n"
-            embed.description += f"{lvlbar2.mention}\n"
+        async with ctx.typing():
+            embed = discord.Embed(description="", color=0xffffff)
+            embed.title = "✧ LATTE XP ROLE!"
+            lvlbar = "・┈・┈・┈・Level!・┈・┈・┈・⠀⠀"
+            lvlbar2 = discord.utils.get(ctx.author.guild.roles, name=lvlbar)
+            if not lvlbar2:
+                await ctx.guild.create_role(name=lvlbar , colour=0x18191c)
+                embed.description += f"{lvlbar.mention}\n"
+                embed.description += f"{lvlbar2.mention}\n"
         
-            for x, y in zip(reversed(level), reversed(colorlvl)):
-                checkrole = discord.utils.get(ctx.author.guild.roles, name=level)
-                if not checkrole:
-                    await ctx.guild.create_role(name=x , colour=y)
-                else:
-                    return
-        elif lvlbar2:
-            for i in reversed(range(len(level))):
-                roles = discord.utils.get(ctx.author.guild.roles, name=level[i])
-                if roles:
-                    embed.description += f"{roles.mention}\n"
+                for x, y in zip(reversed(level), reversed(colorlvl)):
+                    checkrole = discord.utils.get(ctx.author.guild.roles, name=level)
+                    if not checkrole:
+                        await ctx.guild.create_role(name=x , colour=y)
+                    else:
+                        return
+            elif lvlbar2:
+                for i in reversed(range(len(level))):
+                    roles = discord.utils.get(ctx.author.guild.roles, name=level[i])
+                    if roles:
+                        embed.description += f"{roles.mention}\n"
 
-            await ctx.channel.send(embed=embed)
+                await ctx.channel.send(embed=embed)
         
     @commands.command(name="rewardxp")
     @commands.cooldown(1, 15, commands.BucketType.guild)

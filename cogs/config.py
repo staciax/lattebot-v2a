@@ -86,10 +86,10 @@ class Config(commands.Cog):
         """
         await ctx.send(f"Hey {ctx.author.mention}, I am now logging out :wave:")
         await self.bot.logout()
-
+    
     @commands.command(
         name='reload', description="Reload all/one of the bots cogs!"
-    )
+    )   
     @commands.is_owner()
     async def reload(self, ctx, cog=None):
         if not cog:

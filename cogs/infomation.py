@@ -107,16 +107,17 @@ class Infomation(commands.Cog):
         for name , value , inline in fields:
             embed.add_field(name=name , value=value , inline=inline)
         embed.set_thumbnail(url=member.avatar.url)
-        embed.set_footer(text=f"ID: {member.id}" ) 
+        embed.set_footer(text=f"ID: {member.id}")
+
         await ctx.send(embed=embed)
     
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, *, member: discord.Member = None):
         if not member:
             member = ctx.message.author
-
         embed = discord.Embed(title = f"{member.name}'s avatar", color = 0xc4cfcf)
         embed.set_image(url =  member.avatar.url) # Shows the avatar
+
         await ctx.send(embed=embed)
 
 def setup(bot):

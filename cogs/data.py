@@ -22,14 +22,15 @@ class Data(commands.Cog):
 
         if statusType.lower() == "playing":  # Setting `Playing ` status
             await self.bot.change_presence(activity=discord.Game(name=statusText))
-        if statusType.lower() == "streaming": # Setting `Streaming ` status
+        if statusType.lower() == "streaming":  # Setting `Streaming ` status
             await self.bot.change_presence(activity=discord.Streaming(name=statusText, url=""))
-        if statusType.lower() == "listening": # Setting `Listening ` status
+        if statusType.lower() == "listening":  # Setting `Listening ` status
             await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=statusText))
-        if statusType.lower() == "watching": # Setting `Watching ` status
+        if statusType.lower() == "watching":  # Setting `Watching ` status
             await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=statusText))
 
-        embed = discord.Embed(description=f"{utils.emoji_converter('check')} **Status Changed!**\n\n`{statusText}`",color=0xffffff)
+        embed = discord.Embed(
+            description=f"{utils.emoji_converter('check')} **Status Changed!**\n\n`{statusText}`", color=0xffffff)
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -43,19 +44,22 @@ class Data(commands.Cog):
     
     @commands.command(description="check latency bot")
     async def ping2(self, ctx):
-        embed = discord.Embed(description="",color=0xc4cfcf)
+        embed = discord.Embed(description="", color=0xc4cfcf)
 
         start = time()
-        embed.add_field(name=f"{utils.emoji_converter('latteicon')} Latency", value=f"```nim\n{round(self.bot.latency * 1000)} ms```", inline=True)
-        message = await ctx.send(embed = embed)
+        embed.add_field(name=f"{utils.emoji_converter('latteicon')} Latency",
+                        value=f"```nim\n{round(self.bot.latency * 1000)} ms```", inline=True)
+        message = await ctx.send(embed=embed)
         end = time()
-        embed.add_field(name=f"{utils.emoji_converter('typing')} Typing", value=f"```nim\n{(end-start)*1000:,.0f} ms```", inline=True)
+        embed.add_field(name=f"{utils.emoji_converter('typing')} Typing",
+                        value=f"```nim\n{(end-start)*1000:,.0f} ms```", inline=True)
         await message.edit(embed=embed)
 
         dbstart = time()
         levelling
         dbend = time()
-        embed.add_field(name=f"{utils.emoji_converter('mongodb')} Database", value=f"```nim\n{(dbend-dbstart)*1000:,.2f} ms```", inline=True)
+        embed.add_field(name=f"{utils.emoji_converter('mongodb')} Database",
+                        value=f"```nim\n{(dbend-dbstart)*1000:,.2f} ms```", inline=True)
         await message.edit(embed=embed)
     
     @commands.command(name="stats")

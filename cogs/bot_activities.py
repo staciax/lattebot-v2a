@@ -17,7 +17,7 @@ class Botactivities(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"-{self.__class__.__name__}")
+        print(f"{self.__class__.__name__} Cog has been loaded\n-----")
         self.bot_join = self.bot.get_channel(863806084414439454)
         self.bot_leave = self.bot.get_channel(863811115238948864)
 
