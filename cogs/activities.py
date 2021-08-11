@@ -6,6 +6,7 @@ from discord.ext import commands
 from datetime import datetime, timezone
 
 from user_config import LOG_DM_CHANNEL
+from user_config import *
 
 # In cogs we make our own class
 # for d.py which subclasses commands.Cog
@@ -61,7 +62,7 @@ class Events(commands.Cog):
                 embed = discord.Embed(colour=0xFFDF00, #colour=after.colour,
 						            timestamp=datetime.now(timezone.utc))
                 embed.set_author(name=f"Nickname change")
-                embed.set_footer(text=f"{after.name}#{after.discriminator}")
+                embed.set_footer(text=f"{after.name}#{after.discriminator}" , icon_url=after.avatar.url)
                 embed.set_thumbnail(url=after.avatar.url)
 
                 fields = [("**Before**", f"```{before.display_name}```", False),
@@ -95,8 +96,9 @@ class Events(commands.Cog):
 						            timestamp=datetime.now(timezone.utc))
                 embed.set_thumbnail(url=after.avatar.url)
                 
-                embed.set_author(name=f"{after.display_name}", icon_url=after.avatar.url)
-                embed.set_footer(text="Role updates")
+                embed.set_author(name=f"Role update")
+                embed.set_footer(text=f"{after.name}#{after.discriminator}" , icon_url=after.avatar.url)
+                embed.set_thumbnail(url=after.avatar.url)
 
                 fields = [(name , f"{nr_str}\n", False),
                         ("**Current roles**", nr_valur , False)]
@@ -191,7 +193,7 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self , member, before, after):
-        channel = discord.utils.get(member.guild.text_channels, name="message-log")
+        channel = discord.utils.get(member.guild.text_channels, name="voice-log")
         if channel:
             embed = discord.Embed(description="",timestamp=datetime.now(timezone.utc))
             if member.bot:
@@ -200,50 +202,42 @@ class Events(commands.Cog):
             if not before.channel:
                 embed.description += f"**JOIN CHANNEL** : `{after.channel.name}`"
                 embed.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                embed.color=0xffffff
+                embed.color=PTGREEN
                 await channel.send(embed=embed)
-#               print(f'{member.name} Join {after.channel.name}') 
         
             if before.channel and not after.channel:
                 embed.description += f"**LEFT CHANNEL** : `{before.channel.name}`"
                 embed.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                embed.color=0xffffff
-#            print(f"{member.name} left channel {before.channel.name}")
+                embed.color=PTRED
                 await channel.send(embed=embed)
         
             if before.channel and after.channel:
                 if before.channel.id != after.channel.id:
                     embed.description += f"**SWITCHED CHANNELS** : `{before.channel.name}` to `{after.channel.name}`"
                     embed.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                    embed.color=0xffffff
+                    embed.color=PTYELLOW2
                     await channel.send(embed=embed)
-#                print("user switched voice channels")
                 else:
-#                print("something else happend!")
                     if member.voice.self_stream:
                         embedstm = discord.Embed(description=f"**STREAMING in** : `{before.channel.name}`",timestamp=datetime.now(timezone.utc))
                         embedstm.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                        embedstm.colour=0xffffff
+                        embedstm.colour=PURPLE
                         self.current_streamers.append(member.id)
                         await channel.send(embed=embedstm)
 
                     elif member.voice.mute:
-                        embedmute = discord.Embed(description=f"**SERVER MUTED** in `{after.channel.name}`")
+                        embedmute = discord.Embed(description=f"**SERVER MUTED** in `{after.channel.name}`", timestamp=datetime.now(timezone.utc))
                         embedmute.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                        embedmute.colour=0xffffff
+                        embedmute.colour=PTRED
                         await channel.send(embed=embedmute)
 
                     elif member.voice.deaf:
-                        embeddeaf = discord.Embed(description=f"**SERVER DEAFEN** in `{after.channel.name}`")
+                        embeddeaf = discord.Embed(description=f"**SERVER DEAFEN** in `{after.channel.name}`", timestamp=datetime.now(timezone.utc))
                         embeddeaf.set_footer(text=f"{member.name}#{member.discriminator}" , icon_url=member.avatar.url)
-                        embeddeaf.colour=0xffffff
+                        embeddeaf.colour=PTRED
                         await channel.send(embed=embeddeaf)
 
-#                   elif member.voice.requested_to_speak_at:
-#                       print("testing req speak")
-
                     else:
-#                    print("we are here")
                         if member.voice.deaf:
                             print("unmuted")
                         for streamer in self.current_streamers:
@@ -251,7 +245,7 @@ class Events(commands.Cog):
                                 if not member.voice.self_stream:
                                     print("user stopped streaming")
                                     self.current_streamers.remove(member.id)
-                                break        
+                                break           
         else:
             return
     
