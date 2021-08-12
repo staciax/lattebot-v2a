@@ -31,7 +31,7 @@ List
 30.admin log (user mute,ban by admin..)
 31.Error embed converter
 32.click to gif tutorial 
-33.@guild.only
+33.@commands.guild_only() @commands.guild_only() @commands.guild_only() @commands.guild_only() @commands.guild_only() @commands.guild_only()
 
 
 last change ui embed ,dashboard and no music....  / prefix is lt or l or L or d
