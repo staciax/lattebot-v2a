@@ -5,6 +5,7 @@ import traceback
 import asyncio
 import discord
 from discord.ext import commands
+from datetime import datetime, timedelta, timezone
 
 import utils.json_loader
 
@@ -84,7 +85,12 @@ class Config(commands.Cog):
         """
         If the user running the command owns the bot then this will disconnect the bot from discord.
         """
-        await ctx.send(f"Hey {ctx.author.mention}, I am now logging out :wave:")
+        embed = discord.Embed(description="`Latte bot is disconnect`",color=0xffffff,timestamp=datetime.now(timezone.utc))
+        embed.set_footer(text=f"Logout by {ctx.author}" , icon_url = ctx.author.avatar.url)
+        embed.set_author(name=f"{self.bot.user.name} Logout", icon_url=self.bot.user.avatar.url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
+
+        await ctx.send(embed=embed) 
         await self.bot.logout()
     
     @commands.command(

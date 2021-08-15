@@ -41,7 +41,7 @@ async def get_prefix(bot, message):
 
 
 intents = discord.Intents.all()  # Help command requires member intents
-DEFAULTPREFIX = "l"
+DEFAULTPREFIX = "."
 secret_file = utils.json_loader.read_json("secrets")
 bot = commands.Bot(
     command_prefix=get_prefix,

@@ -104,3 +104,23 @@ def web_status(member):
     else:
         wb = f"{m_invisible} Web"
     return wb
+
+def data_time(seconds , minutes , hours, days):
+    if days == 0:
+            days = ""
+    else:
+        days = f"{days}d "
+
+    if hours == 0:
+        hours = ""
+    else:
+        hours = f"{hours}h "
+               
+    if minutes == 0:
+        minutes = ""
+    else:
+        minutes = f"{minutes}m "
+
+    time = f"{days}{hours}{minutes}{seconds}"
+
+    return time

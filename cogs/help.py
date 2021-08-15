@@ -4,7 +4,7 @@ from discord.ext import commands
 from datetime import datetime, timedelta, timezone
 
 # Third party
-from discord_components import *
+#from discord_components import *
 
 # Local
 import utils
@@ -17,7 +17,7 @@ class Help(commands.Cog, name="Help command"):
     
     @commands.Cog.listener()
     async def on_ready(self):
-        DiscordComponents(self.bot)
+        #DiscordComponents(self.bot)
         print(f"{self.__class__.__name__} cog has been loaded\n-----")
 
     @commands.command(

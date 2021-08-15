@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 from utils.util import Pag
-from discord_components import *
+#from discord_components import *
 
 class View(discord.ui.View):
     def __init__(self, *args, **kwargs):
