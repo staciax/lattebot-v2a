@@ -36,26 +36,30 @@ def member_status(ctx):
 def rules_channel(ctx):
     rulesch = ctx.guild.rules_channel
     if rulesch == None:
-        rs += ("none")
+        rs = "⠀"
     else:
         rs = ctx.guild.rules_channel.mention   
     return rs
 
 def system_channel(ctx):
     systemch = ctx.guild.system_channel
-    if systemch == None:
-        sy += ("none")
+    if systemch is None:
+        sy = "⠀"
     else:
         sy = ctx.guild.system_channel.mention
     return sy
 
 def check_boost(ctx):
-  if ctx.guild.premium_tier != 0:
-    boosts = f'**Level:** {ctx.guild.premium_tier}\n**Boosts:** {ctx.guild.premium_subscription_count}'
-    last_boost = max(ctx.guild.members, key=lambda m: m.premium_since or ctx.guild.created_at)
-    if last_boost.premium_since is not None:
-      boosts = f'{boosts}\n**Last Boost:**\n{last_boost}'
-  return boosts
+    if ctx.guild.premium_tier != 0:
+        boosts = f'**Level:** {ctx.guild.premium_tier}\n**Boosts:** {ctx.guild.premium_subscription_count}'
+        last_boost = max(ctx.guild.members, key=lambda m: m.premium_since or ctx.guild.created_at)
+        if last_boost.premium_since is not None:
+            boosts = f'{boosts}\n**Last Boost:**\n{last_boost}'
+    else:
+        boosts_1 = f'**Level:** \n**Boosts:** '
+        boosts = f'{boosts_1}\n**Last Boost:**\n'
+
+    return boosts
 
 """ member infomation converter"""
 

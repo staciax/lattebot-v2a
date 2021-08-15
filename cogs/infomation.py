@@ -58,7 +58,7 @@ class Infomation(commands.Cog):
                 ("AFK Timer",sec,True),
                 ("Rules Channel",utils.rules_channel(ctx),True),
                 ("System Channel",utils.system_channel(ctx),True),
-                ("Verification Level",utils.system_channel(ctx),True),
+                ("Verification Level",ctx.guild.verification_level,True),
                 ("Activity",f"{emoji_s('member')} **Total:** {str(ctx.guild.member_count)}\n{emoji_s('online')} **Online:** {statuses[0]} \n{emoji_s('idle')} **Idle:** {statuses[1]} \n{emoji_s('dnd')} **Dnd:** {statuses[2]} \n{emoji_s('offline')} **Offline:** {statuses[3]}",True),
                 ("Boosts",utils.check_boost(ctx),True),
                 ("Emoji",f"**Total:** {emoji_total}\n**Regular:** {emoji_regular}\n**Animated:** {emoji_animated}",True)]
