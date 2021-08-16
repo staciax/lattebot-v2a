@@ -29,7 +29,7 @@ class Infomation(commands.Cog):
     def is_it_me(ctx):
         return ctx.author.id == 385049730222129152 #@commands.check(is_it_me)
     
-    @commands.command(aliases=['sv'])
+    @commands.command(aliases=["sv", "serverinformation", "serverinformations" , "guildinfo"])
     async def serverinfo(self, ctx):
 
         #afk_channel_check and timeout
@@ -45,7 +45,7 @@ class Infomation(commands.Cog):
 
         embed = discord.Embed(title=f"Server info - {ctx.guild.name}",color=0xffffff)
         fields = [("Server name",ctx.guild.name, True),
-				("Server Owner",f"{ctx.guild.owner.display_name}#{ctx.guild.owner.discriminator}", True),
+				("Server Owner",f"{ctx.guild.owner.mention}", True),
                 ("Server Region",str(ctx.guild.region).title(), True),
                 ("Server Member",len([member for member in ctx.guild.members if not member.bot]), True),
                 ("Server Bots",len([Member for Member in ctx.guild.members if Member.bot]), True),
@@ -67,9 +67,9 @@ class Infomation(commands.Cog):
             embed.add_field(name=name, value=value, inline=inline)
         embed.set_thumbnail(url=ctx.guild.icon.url)
     
-        await ctx.send(embed=embed)
+        await ctx.send(embed=embed , mention_author=False)
 
-    @commands.command(aliases=['ui'] , pass_context=True)
+    @commands.command(aliases=["ui", "userinformation", "userinformations"] , pass_context=True)
     async def userinfo(self, ctx, member: discord.Member = None):
         if not member:
             member = ctx.message.author  
@@ -90,7 +90,7 @@ class Infomation(commands.Cog):
         member_activity = f"{str(member.activity.type).title().split('.')[1]} {member.activity.name}" if member.activity is not None else "** **"
         roles = [role for role in member.roles]
         if len(member.roles) > 1:
-            role_string = ' '.join([r.mention for r in member.roles][1:])
+            role_string = ' '.join(reversed([r.mention for r in member.roles][1:]))
 
         embed = discord.Embed(colour=0xffffff)  #timestamp=ctx.message.created_at, #title=f"User Info - {member}")        embed.set_author(name=f"User info - {member}", icon_url=member.avatar.url)
         fields = [("Nickname",f"{member.display_name}", True),
@@ -111,7 +111,7 @@ class Infomation(commands.Cog):
 
         await ctx.send(embed=embed)
     
-    @commands.command(aliases=['av'])
+    @commands.command(aliases=["av" , "profile"])
     async def avatar(self, ctx, *, member: discord.Member = None):
         if not member:
             member = ctx.message.author

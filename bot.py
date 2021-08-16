@@ -172,6 +172,7 @@ async def _eval(ctx, *, code):
 
     await pager.start(ctx)
 
+bot.load_extension('jishaku')
 
 if __name__ == "__main__":
     # When running this file, if it is the 'main' file
